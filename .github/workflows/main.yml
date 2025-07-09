@@ -215,8 +215,6 @@ jobs:
           # print()関数の外にリダイレクトを置く
           print(f'glitched_output_file={output_filename}')
         " >> $GITHUB_OUTPUT # ここで出力リダイレクト
-    ---
-
     - name: Create GitHub Release
       id: create_release
       uses: softprops/action-gh-release@v2
