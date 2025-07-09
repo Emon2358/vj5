@@ -43,13 +43,16 @@ jobs:
         GLITCHES_COUNT_INPUT: ${{ github.event.inputs.glitches_count }}
         GLITCH_STRENGTH_BYTES_INPUT: ${{ github.event.inputs.glitch_strength_bytes }}
       run: |
+        # ここが最も重要な変更点です。
+        # 'python -c "' の行から始まるPythonコードブロック全体を、
+        # さらに深くインデント（通常は2スペースまたは4スペース）しています。
         python -c "
           import subprocess
           import os
           import random
           import sys
           import re
-
+          
           def download_niconico_video(url, output_dir='videos', cookies_file_path=None):
               if not os.path.exists(output_dir):
                   os.makedirs(output_dir)
@@ -208,9 +211,11 @@ jobs:
               print('動画のダウンロードに失敗しました。データモッシュをスキップします。')
               sys.exit(1)
 
+          # GitHub Actionsの次のステップで利用するために、出力ファイル名を環境変数として設定
+          # print()関数の外にリダイレクトを置く
           print(f'glitched_output_file={output_filename}')
-        " >> $GITHUB_OUTPUT # ここで出力
-
+        " >> $GITHUB_OUTPUT # ここで出力リダイレクト
+    ---
 
     - name: Create GitHub Release
       id: create_release
